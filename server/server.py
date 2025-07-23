@@ -57,14 +57,16 @@ class MCPDemoServer:
             logger.info(f"Counter updated to {sample_resources['counter']}")
             return sample_resources["counter"]
         
+        base_url = f"http://{self.host}:{self.port}"
+
         # Add resources using add_resource_fn method with complete URLs
-        self.server.add_resource_fn(get_greeting, uri="http://localhost:8000/greeting")
-        self.server.add_resource_fn(get_status, uri="http://localhost:8000/status")
-        self.server.add_resource_fn(get_info, uri="http://localhost:8000/info")
-        self.server.add_resource_fn(get_counter, uri="http://localhost:8000/counter")
+        self.server.add_resource_fn(get_greeting, uri=f"{base_url}/greeting")
+        self.server.add_resource_fn(get_status, uri=f"{base_url}/status")
+        self.server.add_resource_fn(get_info, uri=f"{base_url}/info")
+        self.server.add_resource_fn(get_counter, uri=f"{base_url}/counter")
         
         # Add resource with PUT method - need to use a different URI to avoid conflict
-        self.server.add_resource_fn(update_counter, uri="http://localhost:8000/counter/update")
+        self.server.add_resource_fn(update_counter, uri=f"{base_url}/counter/update")
         
     # Resource methods are now defined inside setup_resources using decorators
     

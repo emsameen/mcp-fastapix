@@ -23,7 +23,7 @@ class MCPSSEClient:
     async def get_resource(self, resource_name):
         """Get a resource from the server"""
         logger.info(f"Requesting resource: {resource_name}")
-        result = await self.client.get(f"http://localhost:8000/{resource_name}")
+        result = await self.client.get(f"{self.server_url.rstrip('/')}/{resource_name}")
         logger.info(f"Received {resource_name}: {result}")
         return result
     
@@ -32,9 +32,9 @@ class MCPSSEClient:
         logger.info(f"Updating resource {resource_name} with value: {value}")
         # For PUT requests to counter, use the special update endpoint
         if resource_name == "counter":
-            result = await self.client.put(f"http://localhost:8000/counter/update", value)
+            result = await self.client.put(f"{self.server_url.rstrip('/')}/counter/update", value)
         else:
-            result = await self.client.put(f"http://localhost:8000/{resource_name}", value)
+            result = await self.client.put(f"{self.server_url.rstrip('/')}/{resource_name}", value)
         logger.info(f"Resource {resource_name} updated to: {result}")
         return result
     
